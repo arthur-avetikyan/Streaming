@@ -1,0 +1,26 @@
+﻿@page "/account/confirmEmail"
+@page "/account/{UserName}/confirmEmail/{Token}"
+
+@attribute [AllowAnonymous]
+@layout LoginLayout
+
+<MatCard>
+    <div class="logo">
+        <h4>Email Confirmation</h4>
+    </div>
+    <EditForm Model="@ConfirmEmailRequest" OnValidSubmit="@SendConfirmation">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <fieldset>
+            <div class="form-group">
+                <MatTextField @bind-Value="@ConfirmEmailRequest.UserName" Label="Username" Icon="person" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+            </div>
+            <div class="form-group">
+                <MatTextField @bind-Value="@ConfirmEmailRequest.Token" Label="Token" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+            </div>
+            <div class="form-group d-flex justify-content-end">
+                <MatButton Type="submit" Raised="true" Disabled="@disableConfirmButton">Confirm</MatButton>
+            </div>
+        </fieldset>
+    </EditForm>
+</MatCard>

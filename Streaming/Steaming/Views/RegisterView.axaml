@@ -1,0 +1,18 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Streaming.Models;assembly=Streaming"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Streaming.Views.RegisterView">
+
+  <StackPanel Orientation="Vertical" Margin="50">
+    <TextBox Text="{Binding Name, Mode=TwoWay}" Watermark="Name"
+             FontSize="20" Padding="5" Margin="20"/>
+    <TextBox Text="{Binding Location, Mode=TwoWay}" Watermark="Location" 
+             FontSize="20" Padding="5" Margin="20"/>
+    <NumericUpDown Value="{Binding TimeZone, Mode=TwoWay}"
+                   AllowSpin="true" Minimum="-12" Maximum="12" Increment="1" FontSize="20" Padding="5" Margin="20"/>
+    <Button Content="Submit" Command="{Binding Save}" Padding="5" Margin="50"></Button>
+  </StackPanel>
+</UserControl>

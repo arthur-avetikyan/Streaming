@@ -1,0 +1,10 @@
+﻿<AuthorizeView Roles="@(EAuthorizationRoles.Administrator.GetAuthorizationRolesName())" Context="AuthorizeContext">
+    <Authorized>
+        @ChildContent
+    </Authorized>
+</AuthorizeView>
+
+@code{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

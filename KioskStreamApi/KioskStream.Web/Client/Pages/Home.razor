@@ -1,0 +1,69 @@
+﻿@page "/"
+
+@inject NavigationManager NavigationManager;
+
+<div class="form-group d-flex justify-content-center">
+    <MatH3>Welcome to KioskStream Panel</MatH3>
+</div>
+
+<div class="mat-layout-grid">
+    <div class="mat-layout-grid-inner">
+
+        <AuthorizedAsAdmin>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                <MatCard class="demo-mat-card">
+                    <MatCardContent>
+                        <MatButton Icon="@MatIconNames.People" Unelevated="true"
+                                   Link="@NavigationManager.ToAbsoluteUri($"/users").AbsoluteUri" Label="Users"></MatButton>
+                    </MatCardContent>
+                </MatCard>
+            </div>
+            <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                <MatCard class="demo-mat-card">
+                    <MatCardContent>
+                        <MatButton Icon="@MatIconNames.Directions_walk" Unelevated="true"
+                                   Link="@NavigationManager.ToAbsoluteUri($"/roles").AbsoluteUri" Label="Roles"></MatButton>
+                    </MatCardContent>
+                </MatCard>
+            </div>
+        </AuthorizedAsAdmin>
+
+        <AuthorizeView>
+            <Authorized>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatButton Icon="@MatIconNames.Contacts" Unelevated="true"
+                                       Link="@NavigationManager.ToAbsoluteUri($"/employees").AbsoluteUri" Label="Employees"></MatButton>
+                        </MatCardContent>
+                    </MatCard>
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatButton Icon="@MatIconNames.Account_balance" Unelevated="true"
+                                       Link="@NavigationManager.ToAbsoluteUri($"/departments").AbsoluteUri" Label="Departments"></MatButton>
+                        </MatCardContent>
+                    </MatCard>
+                </div>
+
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatButton Icon="@MatIconNames.List_alt" Unelevated="true"
+                                       Link="@NavigationManager.ToAbsoluteUri($"/templates").AbsoluteUri" Label="Templates"></MatButton>
+                        </MatCardContent>
+                    </MatCard>
+                </div>
+                <div class="mat-layout-grid-cell mat-layout-grid-cell-span-6">
+                    <MatCard class="demo-mat-card">
+                        <MatCardContent>
+                            <MatButton Icon="@MatIconNames.Rate_review" Unelevated="true"
+                                       Link="@NavigationManager.ToAbsoluteUri($"/reviews").AbsoluteUri" Label="Reviews"></MatButton>
+                        </MatCardContent>
+                    </MatCard>
+                </div>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</div>

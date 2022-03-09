@@ -1,0 +1,45 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ext="clr-namespace:Streaming.Converters;assembly=Streaming"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="1000"
+             x:Class="Streaming.Views.PluginListView">
+
+  <UserControl.Resources>
+    <ext:UIExportViewConverter x:Key="UIExportViewConverter"/>
+    <DataTemplate x:Key="DetailsTemplate">
+      <Button Margin="5" FontSize="16" FontWeight="ExtraBold" Content="{Binding Title}"
+              Command="{Binding DataContext.Select, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ItemsControl}}}}"
+              CommandParameter="{Binding EntryKey}" />
+    </DataTemplate>
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0" ColumnDefinitions="7*, *">
+      <Button Grid.Column="0" Margin="5" FontSize="12" FontWeight="ExtraBold"
+              Content="Home" Command="{Binding Home}" IsVisible="{Binding PluginSelected}"/>
+      <Button Grid.Column="1" Margin="5" FontSize="12" FontWeight="ExtraBold"
+              Content="Settings" Command="{Binding Settings}"/>
+    </Grid>
+
+    <Grid Grid.Row="1" ColumnDefinitions="1*">
+      <ListBox Margin="5" Items="{Binding Plugins}" ItemTemplate="{StaticResource DetailsTemplate}" IsVisible="{Binding !PluginSelected}"/>
+      <TextBlock HorizontalAlignment="Center" Margin="5" FontSize="30" FontWeight="ExtraBold" IsEnabled="False" IsVisible="{Binding !Plugins.Count}"
+                 Text="Wait For Aministrator Approval or new Plugins" TextWrapping="Wrap">
+      </TextBlock>
+    </Grid>
+
+    <Grid Grid.Row="2" ColumnDefinitions="1*">
+      <ContentControl Margin="5" Content="{Binding Content}"></ContentControl>
+    </Grid>
+
+  </Grid>
+
+</UserControl>

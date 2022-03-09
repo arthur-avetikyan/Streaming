@@ -1,0 +1,15 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="Streaming.Views.SettingsDialogView"
+        x:Name="SettingsDialogView"
+        Height="200" Width="400">
+
+  <StackPanel Orientation="Vertical">
+    <TextBox Text="{Binding Url, Mode=TwoWay}" Watermark="API Url"
+               FontSize="20" Padding="15" Margin="30"/>
+    <Button Content="Save" Command="{Binding Save}" Padding="5" Margin="5"></Button>
+    <Button Content="Cancel" Command="{Binding Cancel}" Padding="5" Margin="5"></Button>
+  </StackPanel>
+</UserControl>

@@ -1,0 +1,119 @@
+﻿@page "/kiosks"
+
+@attribute [Authorize]
+
+    <MatH4>Kiosks</MatH4>
+
+@if (_kiosks == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading...</label>
+    </LoadingBackground>
+}
+else
+{
+    <MatTable Class="mat-elevation-z5" Items="@_kiosks" Striped="true" DebounceMilliseconds="150" ShowPaging="true"
+              UseSortHeaderRow="true" FilterByColumnName="FullName" SearchTermFieldLabel="Filter by Name" SearchTermFieldPlaceHolder="Kiosks" PageSize="@PageSize"
+              AllowSelection="false">
+        <MatTableHeader>
+            <MatSortHeaderRow>
+                <MatSortHeader>
+                @*<AuthorizedAsAdmin>
+                        <MatTooltip Tooltip="Add New Employee" Wrap="true">
+                <MatButton Type="button" Icon="@MatIconNames.Add" Label="New"
+                           OnClick="@(() => {_isAddEmployeeDialogOpen = true; })"></MatButton>
+            </MatTooltip>
+        </AuthorizedAsAdmin>*@
+            </MatSortHeader>
+                <MatSortHeader>Name</MatSortHeader>
+                <MatSortHeader>Identifier</MatSortHeader>
+                <MatSortHeader>Location</MatSortHeader>
+                <MatSortHeader>TimeZone</MatSortHeader>
+                <MatSortHeader>Approved</MatSortHeader>
+                <MatSortHeader>CreatedDate</MatSortHeader>
+            </MatSortHeaderRow>
+        </MatTableHeader>
+        <MatTableRow Context="KioskRow">
+            <td>
+                <div style="width: auto">
+                    <MatTooltip Tooltip="Edit Kiosk" Wrap="true">
+                        <MatIconButton Icon="@MatIconNames.Edit" OnClick="@(() => { OpenModal(KioskRow.Id);})">
+                        </MatIconButton>
+                    </MatTooltip>
+                    @*<AuthorizedAsAdmin>
+                    <MatTooltip Tooltip="Delete Employee" Wrap="true">
+                        <MatIconButton Icon="@MatIconNames.Delete"
+                                       Link="@NavigationManager.ToAbsoluteUri($"/kiosks/{KioskRow.Id}?isEditDisabled={true}&returnUrl={NavigationManager.ToBaseRelativePath(NavigationManager.Uri)}&endContract={true}").AbsoluteUri"></MatIconButton>
+                    </MatTooltip>
+                </AuthorizedAsAdmin>*@
+                </div>
+            </td>
+            <td>@KioskRow.Name</td>
+            <td>@KioskRow.KioskIdentifier.ToString("N")</td>
+            <td>@KioskRow.Location</td>
+            <td>@KioskRow.TimeZone</td>
+            <td>@KioskRow.Approved</td>
+            <td>@KioskRow.CreateDateTimeUtc.ToString("MMMM dd, yyyy")</td>
+
+        </MatTableRow>
+    </MatTable>
+}
+
+    <MatDialog @bind-IsOpen="@_isEditKioskDialogOpen">
+        <MatDialogTitle>Approve/Reject Kiosk</MatDialogTitle>
+        <EditForm Model="@KioskRequest" OnValidSubmit="@Approve">
+            <MatDialogContent>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <fieldset>
+                    <div class="form-group">
+                        <div style="display:inline" >
+                            <div style="float: left; width: 50%;">
+                                <label>Name:</label>
+                            </div>
+                            <div style="float: left; width: 50%;">
+                                <label>@KioskRequest.Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:inline" >
+                            <div style="float: left; width: 50%;">
+                                <label>Kiosk Identifier:</label>
+                            </div>
+                            <div style="float: left; width: 50%;">
+                                <label>@KioskRequest.KioskIdentifier</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:inline" >
+                            <div style="float: left; width: 50%;">
+                                <label>Location:</label>
+                            </div>
+                            <div style="float: left; width: 50%;">
+                                <label>@KioskRequest.Location</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display:inline" >
+                            <div style="float: left; width: 50%;">
+                                <label>Time Zone:</label>
+                            </div>
+                            <div style="float: left; width: 50%;">
+                                <label>UTC @KioskRequest.TimeZone</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <MatCheckbox @bind-Value="@KioskRequest.Approved" class="filled-in chk-col-blue">Approve :</MatCheckbox>
+                    </div>
+                </fieldset>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton Type="reset" OnClick="@(e => { _isEditKioskDialogOpen = false; })">Cancel</MatButton>
+                <MatButton Type="submit">Save</MatButton>
+            </MatDialogActions>
+        </EditForm>
+    </MatDialog>

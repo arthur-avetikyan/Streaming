@@ -1,0 +1,39 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Streaming.WebCamImage.ViewModels"
+             xmlns:ext="clr-namespace:Streaming.WebCamImage.Services;assembly=Streaming.WebCamImage"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="1000"
+             x:Class="Streaming.WebCamImage.Views.WebCamImageView">
+
+  <UserControl.Resources>
+    <ext:BitmapAssetValueConverter x:Key="variableImage"/>
+    <ext:BitmapAssetValueConverter x:Key="streamImage"/>
+  </UserControl.Resources>
+
+  <Border BorderBrush="Blue"
+        BorderThickness="2"
+        CornerRadius="3"
+        Padding="4">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      
+      <Grid Grid.Row="0" ColumnDefinitions="5*, 2.5*, 2.5*">
+        <Button Grid.Column="0" Margin="10" FontSize="14" FontWeight="Bold" Content="Capture" Command="{Binding Capture}" Height="30" Width="200"/>
+        <Button Grid.Column="1" Margin="10" FontSize="14" FontWeight="Bold" Content="Start" Command="{Binding Start}" Height="30" Width="200"/>
+        <Button Grid.Column="2" Margin="10" FontSize="14" FontWeight="Bold" Content="Stop" Command="{Binding Stop}" Height="30" Width="200"/>
+      </Grid>
+      
+      <Grid Grid.Row="1" ColumnDefinitions="5*, 5*">
+        <Image UseLayoutRounding="True" RenderOptions.BitmapInterpolationMode="HighQuality" Height="700" Width="700" Grid.Column="1"
+                 Source="{Binding StreamPath, Mode=OneWay, Converter={StaticResource streamImage}}"/>
+        <Image UseLayoutRounding="True" RenderOptions.BitmapInterpolationMode="HighQuality" Height="700" Width="700" Grid.Column="0"
+                 Source="{Binding ImagePath, Mode=OneWay, Converter={StaticResource variableImage}}"/>
+      </Grid>
+    </Grid>
+  </Border>
+</UserControl>

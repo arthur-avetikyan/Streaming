@@ -1,0 +1,18 @@
+﻿<AuthorizeView Context="AuthorizeContext">
+    <Authorized>
+        <MatTooltip Tooltip="@AuthorizeContext.User.Identity.Name" Wrap="true">
+            <MatButton Icon="@MatIconNames.Account_box" RefBack="@context" Label="@AuthorizeContext.User.Identity.Name"
+                       OnClick="@(() => NavigationManager.NavigateTo($"/users/{AuthorizeContext.User.Identity.Name}"))">
+            </MatButton>
+        </MatTooltip>
+        <NotificationArea UserName="@AuthorizeContext.User.Identity.Name" />
+        <MatTooltip Tooltip="Logout" Wrap="true">
+            <MatButton Icon="@MatIconNames.Exit_to_app" RefBack="@context" OnClick="LogoutClick"></MatButton>
+        </MatTooltip>
+    </Authorized>
+    <NotAuthorized>
+        <MatTooltip Tooltip="Login">
+            <MatButton Icon="@MatIconNames.Account_box" RefBack="@context" Link="/account/login"></MatButton>
+        </MatTooltip>
+    </NotAuthorized>
+</AuthorizeView>

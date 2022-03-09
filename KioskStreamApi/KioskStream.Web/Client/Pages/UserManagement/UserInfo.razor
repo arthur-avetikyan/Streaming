@@ -1,0 +1,125 @@
+﻿
+@if (UserDetails == null)
+{
+    <LoadingBackground ShowLogoBox="true"></LoadingBackground>
+}
+else
+{
+    <EditForm Model="@UserDetails" OnValidSubmit="UpdateAsync">
+
+        <div class="form-group d-flex justify-content-end">
+            @if (!IsEditEnabled)
+            {
+                <MatButton Icon="edit" Label="Edit" OnClick="EnableEdit"></MatButton>
+            }
+            @if (IsEditEnabled)
+            {
+                <MatButton Type="button" OnClick="DisableEdit">Cancel</MatButton>
+                <MatButton Type="submit" Raised="true">Update</MatButton>
+            }
+        </div>
+        <fieldset>
+            <div class="form-group">
+                <MatTextField @bind-Value="@UserDetails.UserName" Label="User Name" Icon="person" IconTrailing="true" Required="true" ReadOnly="!IsEditEnabled" FullWidth="true"></MatTextField>
+            </div>
+            <div class="form-group">
+                <MatTextField @bind-Value="@UserDetails.Email" Label="Email" Icon="mail_outline" IconTrailing="true" ReadOnly="!IsEditEnabled" FullWidth="true"></MatTextField>
+            </div>
+            <div class="form-group">
+                <MatTextField @bind-Value="@UserDetails.FirstName" Label="First Name" Icon="person" IconTrailing="true" ReadOnly="!IsEditEnabled" FullWidth="true"></MatTextField>
+            </div>
+            <div class="form-group">
+                <MatTextField @bind-Value="@UserDetails.LastName" Label="Last Name" Icon="person" IconTrailing="true" ReadOnly="!IsEditEnabled" FullWidth="true"></MatTextField>
+            </div>
+
+            <tr>
+                <td>
+                    <MatButton Disabled="true" Icon="directions_walk">Roles</MatButton>
+                </td>
+                <td>
+                    @if (UserDetails.Roles != null)
+                    {
+                        <MatChipSet>
+                            @{
+                                if (IsEditEnabled)
+                                {
+                                    @foreach (var role in UserRoleStatuses.OrderBy(x => x.Name))
+                                    {
+                                        <MatChip Label="@role.Name" LeadingIcon="@((role.IsSelected) ? "done" : "")" @onclick="@(() => UpdateUserRole(role))" />
+                                    }
+                                }
+                                else
+                                {
+                                    @foreach (var role in UserDetails.Roles)
+                                    {
+                                        <MatChip Label="@role"></MatChip>
+                                    }
+                                }
+                            }
+                        </MatChipSet>
+                    }
+                </td>
+            </tr>
+            <MatDivider></MatDivider>
+        </fieldset>
+    </EditForm>
+    @*<MatButton Icon="rotate_right" OnClick="@OpenChangePasswordDialog" Label="Change Password" Raised="true" class="form-group d-flex justify-content-end"></MatButton>*@
+    @*<EditForm Model="@User">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <fieldset>
+
+                <div class="form-group">
+                    <MatTextField @bind-Value="@User.UserName" Label="User Name" Icon="person" IconTrailing="true" FullWidth="true" Required="true" ReadOnly="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@User.Email" Label="Email" Icon="mail_outline" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@User.FirstName" Label="First Name" FullWidth="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@User.LastName" Label="Last Name" FullWidth="true"></MatTextField>
+                </div>
+
+                <div class="form-group">
+                    <strong>Roles</strong><br />
+                    <MatChipSet>
+                        @foreach (var role in User.Roles)
+                        {
+                            <MatChip Label="@role"></MatChip>
+                        }
+                    </MatChipSet>
+                </div>
+                <div class="form-group d-flex justify-content-end">
+                    <MatButton Type="submit" Raised="true">Update Profile</MatButton>
+                </div>
+            </fieldset>
+        </EditForm>*@
+
+    @*<MatDialog @bind-IsOpen="@_changePasswordDialogOpen">
+            <MatDialogTitle>Change password for @ChangePasswordParameters.UserName</MatDialogTitle>
+            <MatDialogContent>
+                <EditForm Model="@ChangePasswordParameters" OnValidSubmit="@ChangeUserPasswordAsync">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <fieldset>
+                        <div class="form-group">
+                            <MatTextField @bind-Value="@ChangePasswordParameters.OldPassword" Label="Old Password" Icon="lock" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                        </div>
+                        <div class="form-group">
+                            <MatTextField @bind-Value="@ChangePasswordParameters.NewPassword" Label="New Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                        </div>
+                        <div class="form-group">
+                            <MatTextField @bind-Value="@ChangePasswordParameters.PasswordConfirm" Label="New Password Confirmation" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                        </div>
+                    </fieldset>
+                </EditForm>
+            </MatDialogContent>
+            <MatDialogActions>
+                <MatButton OnClick="@(e => { _changePasswordDialogOpen = false; })">Cancel</MatButton>
+                <MatButton OnClick="@ChangeUserPasswordAsync">Change</MatButton>
+            </MatDialogActions>
+        </MatDialog>*@
+
+}

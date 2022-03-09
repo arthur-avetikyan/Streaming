@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<efcore p1:name="Artaxias" p1:Guid="7a76e0f7-f903-48ae-b916-b5b096107591" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+  <class name="Permission" entity-set="Permissions" table="Permission" schema="dbo" p1:Guid="238199e3-3bf4-49de-a6d1-f61c7bbaa5e0">
+    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="05980b21-151c-4905-a22f-964e122def14">
+      <column name="Id" not-null="True" p1:unicode="False" />
+    </id>
+    <property name="Name" type="String" p1:ValidateMaxLength="256" p1:ValidateRequired="true" p1:Guid="ce032e13-71fb-4df8-ab3c-817382d544d5">
+      <column name="Name" not-null="True" length="256" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="Code" type="String" p1:ValidateMaxLength="256" p1:ValidateRequired="true" p1:Guid="bac25194-5683-43b6-b438-a0ab784cdb23">
+      <column name="Code" not-null="True" length="256" sql-type="varchar" p1:unicode="False" />
+    </property>
+  </class>
+  <class name="Role" entity-set="Roles" table="Role" schema="dbo" p1:Guid="a3bbab3f-7e1b-4228-b6e5-c4fb7cc6139c">
+    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="146bee8b-0309-4de4-b623-526506c15ecd">
+      <column name="Id" not-null="True" sql-type="int" p1:unicode="False" />
+    </id>
+    <property name="Name" type="String" p1:ValidateMaxLength="256" p1:ValidateRequired="true" p1:Guid="12b876e4-3355-4af0-8fcc-eeb7c0e5a3d9">
+      <column name="Name" not-null="True" length="256" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="CreatedByUserId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ba3ebb03-6dba-4e87-ad14-ce7851c7ba08">
+      <column name="CreatedByUserId" not-null="False" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="CreatedDatetimeUTC" type="DateTime" p1:ValidateRequired="true" p1:Guid="04de3253-f0d1-49ed-8eb9-99b4c862cbc4">
+      <column name="CreatedDatetimeUTC" not-null="True" sql-type="datetime2" p1:unicode="False" />
+    </property>
+    <property name="UpdatedByUserId" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3c893be0-1938-498d-9ab7-0bd226eb3595">
+      <column name="UpdatedByUserId" not-null="False" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="UpdatedDatetimeUTC" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="216fafaa-77a8-479c-a2dd-cbc7496227ba">
+      <column name="UpdatedDatetimeUTC" not-null="False" sql-type="datetime2" p1:unicode="False" />
+    </property>
+  </class>
+  <class name="RolePermission" entity-set="RolePermissions" table="RolePermission" schema="dbo" p1:Guid="a37aa477-b110-45c6-bdd6-e4ab124e80d0">
+    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="2498ec30-ac7f-49c1-b4a0-2441a7ee1874">
+      <column name="Id" not-null="True" p1:unicode="False" />
+    </id>
+    <property name="RoleId" type="Int32" p1:ValidateRequired="true" p1:Guid="c3ff2654-68ac-40bb-b9ed-18a162dfa8fe">
+      <column name="RoleId" not-null="True" p1:unicode="False" />
+    </property>
+    <property name="PermissionId" type="Int32" p1:ValidateRequired="true" p1:Guid="9ddf0c28-62b1-4924-ba0f-aeb9b1b05d34">
+      <column name="PermissionId" not-null="True" p1:unicode="False" />
+    </property>
+  </class>
+  <class name="User" entity-set="Users" table="`User`" schema="dbo" p1:Guid="b22793e8-cf38-42fb-8a55-ad5e001c5eb7">
+    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="06fa9cdd-af18-43b6-927a-1727402ee344">
+      <column name="Id" not-null="True" p1:unicode="False" />
+    </id>
+    <property name="FirstName" type="String" p1:ValidateMaxLength="256" p1:ValidateRequired="true" p1:Guid="233bfef4-e5df-4645-8347-96d00f1e6a9b">
+      <column name="FirstName" not-null="True" length="256" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="LastName" type="String" p1:ValidateMaxLength="256" p1:ValidateRequired="true" p1:Guid="c412532b-4870-4111-9986-9d128e440aa1">
+      <column name="LastName" not-null="True" length="256" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="Username" type="String" p1:ValidateMaxLength="64" p1:ValidateRequired="true" p1:Guid="953ff641-c802-4c65-a1e4-6ac2b34882cc">
+      <column name="Username" not-null="True" length="64" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="Email" type="String" p1:ValidateMaxLength="256" p1:ValidateRequired="true" p1:Guid="13593b7a-3388-4b80-9300-22ef7faddc27">
+      <column name="Email" not-null="True" length="256" sql-type="varchar" p1:unicode="False" />
+    </property>
+    <property name="Password" type="VarBinary" p1:ValidateRequired="true" p1:Guid="70c6b972-f3d2-400b-92e0-20051bab4c3f">
+      <column name="Password" not-null="True" length="64" sql-type="binary" p1:fixed-length="True" p1:unicode="False" />
+    </property>
+    <property name="IsActive" type="Boolean" p1:ValidateRequired="true" p1:Guid="9fec94ff-0543-4bc9-b253-87c82bc43aa1">
+      <column name="IsActive" not-null="True" sql-type="bit" p1:unicode="False" />
+    </property>
+    <property name="IsEmailConfirmed" type="Boolean" p1:ValidateRequired="true" p1:Guid="a36bf606-ceef-4426-90c0-39615199e5d7">
+      <column name="IsEmailConfirmed" not-null="True" sql-type="bit" p1:unicode="False" />
+    </property>
+    <property name="ConfirmationCode" type="VarBinary" p1:ValidateRequired="true" p1:Guid="7a560c2d-d88e-4350-9459-358447bbe4ff">
+      <column name="ConfirmationCode" not-null="True" length="64" sql-type="binary" p1:fixed-length="True" p1:unicode="False" />
+    </property>
+    <property name="CreatedDatetimeUTC" type="DateTime" p1:ValidateRequired="true" p1:Guid="d555f8eb-2045-4b22-ad51-2f671bf68341">
+      <column name="CreatedDatetimeUTC" not-null="True" sql-type="datetime2" p1:unicode="False" />
+    </property>
+    <property name="UpdatedDatetimeUTC" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b304464c-1a99-42ef-ba57-c8102470a1d0">
+      <column name="UpdatedDatetimeUTC" not-null="False" sql-type="datetime2" p1:unicode="False" />
+    </property>
+  </class>
+  <class name="UserRole" entity-set="UserRoles" table="UserRole" schema="dbo" p1:Guid="610d1f56-f351-4a2a-a018-a03174f1f069">
+    <id name="Id" type="Int32" p1:ValidateRequired="true" p1:Guid="69fd361e-25b4-4517-abc3-3465b39b20bc">
+      <column name="Id" not-null="True" p1:unicode="False" />
+    </id>
+    <property name="UserId" type="Int32" p1:ValidateRequired="true" p1:Guid="b8a51fbd-0546-4b2a-88f7-1e75e4caf29b">
+      <column name="UserId" not-null="True" sql-type="int" p1:unicode="False" />
+    </property>
+    <property name="RoleId" type="Int32" p1:ValidateRequired="true" p1:Guid="231d037c-e200-43d4-8586-58468765f699">
+      <column name="RoleId" not-null="True" sql-type="int" p1:unicode="False" />
+    </property>
+  </class>
+  <associations>
+    <association name="User_Role" cardinality="OneToMany" p1:Guid="08c00bd0-4fc8-4f51-8a91-08b62d5ef1f7">
+      <end1 multiplicity="ZeroOrOne" name="User_CreatedByUserId" class="Role" relation-class="User" constrained="True" lazy="False" p1:Guid="17e7115b-877e-48f4-a8bc-bff83a23f59a">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Roles_CreatedByUserId" class="User" relation-class="Role" lazy="False" p1:Guid="55cb2129-b8a2-40f7-b28c-e2d1013e1f97">
+        <property name="CreatedByUserId" />
+      </end2>
+    </association>
+    <association name="User_Role1" cardinality="OneToMany" p1:Guid="9570d8bb-6d9d-4aee-9c48-539de8464dde">
+      <end1 multiplicity="ZeroOrOne" name="User_UpdatedByUserId" class="Role" relation-class="User" constrained="True" lazy="False" p1:Guid="fc98cf44-659c-4e94-bf5c-0eb71a4ca2f2">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="Roles_UpdatedByUserId" class="User" relation-class="Role" lazy="False" p1:Guid="8cc6b288-c9de-4d66-b275-01a662409df3">
+        <property name="UpdatedByUserId" />
+      </end2>
+    </association>
+    <association name="Role_RolePermission" cardinality="OneToMany" p1:Guid="0b6e79ca-d619-4f65-a837-e73c7dcf86bc">
+      <end1 multiplicity="One" name="Role" class="RolePermission" relation-class="Role" constrained="True" lazy="False" p1:Guid="09e487c5-b160-419a-8a7a-bf3be4d96848">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="RolePermissions" class="Role" relation-class="RolePermission" lazy="False" p1:Guid="47dc18a0-2706-4c49-bc8b-42782677e8ed">
+        <property name="RoleId" />
+      </end2>
+    </association>
+    <association name="Permission_RolePermission" cardinality="OneToMany" p1:Guid="43c898b8-4996-4b87-a321-da386ba9b877">
+      <end1 multiplicity="One" name="Permission" class="RolePermission" relation-class="Permission" constrained="True" lazy="False" p1:Guid="4d80df8e-83e2-441f-b7ad-9ae364867797">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="RolePermissions" class="Permission" relation-class="RolePermission" lazy="False" p1:Guid="2a36d8a9-1dae-4254-9349-249c85cc331c">
+        <property name="PermissionId" />
+      </end2>
+    </association>
+    <association name="User_UserRole" cardinality="OneToMany" p1:Guid="5d708b56-a10f-424d-83c1-6d9e61b74ea3">
+      <end1 multiplicity="One" name="User" class="UserRole" relation-class="User" constrained="True" lazy="False" p1:Guid="f83ef809-aacc-4a5f-a33d-8aaa8ce8a60a">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="UserRoles" class="User" relation-class="UserRole" lazy="False" p1:Guid="2f05ae55-fbef-4b98-ac3b-6bf3c16490ee">
+        <property name="UserId" />
+      </end2>
+    </association>
+    <association name="Role_UserRole" cardinality="OneToMany" p1:Guid="8c61d40b-4aec-46d8-a5ba-897c183c8f0b">
+      <end1 multiplicity="One" name="Role" class="UserRole" relation-class="Role" constrained="True" lazy="False" p1:Guid="8cc0ba61-ea43-4516-9775-4feca3c64240">
+        <property name="Id" />
+      </end1>
+      <end2 multiplicity="Many" name="UserRoles" class="Role" relation-class="UserRole" lazy="False" p1:Guid="41504815-1629-4978-a82b-45a612b73ea3">
+        <property name="RoleId" />
+      </end2>
+    </association>
+  </associations>
+</efcore>

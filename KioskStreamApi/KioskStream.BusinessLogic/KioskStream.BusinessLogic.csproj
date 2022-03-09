@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KioskStream.Data\KioskStream.Data.csproj" />
+    <ProjectReference Include="..\KioskStream.Web\Common\KioskStream.Web.Common.csproj" />
+    <ProjectReference Include="..\KioskStream.Web\Server\KioskStream.Web.Server.csproj" />
+  </ItemGroup>
+
+</Project>

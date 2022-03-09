@@ -1,0 +1,45 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="800"
+             x:Class="Streaming.Drawing.Views.DrawView">
+  <UserControl.Styles>
+    <Style Selector="Rectangle.red">
+      <Setter Property="Height" Value="700"/>
+      <Setter Property="Width" Value="700"/>
+      <Setter Property="Fill" Value="Red"/>
+      <Style.Animations>
+        <Animation Duration="0:0:3" IterationCount="INFINITE">
+          <KeyFrame Cue="0%">
+            <Setter Property="Opacity" Value="0.0"/>
+            <Setter Property="RotateTransform.Angle" Value="0.0"/>
+          </KeyFrame>
+          <KeyFrame Cue="25%">
+            <Setter Property="Opacity" Value="0.25"/>
+            <Setter Property="RotateTransform.Angle" Value="90.0"/>
+          </KeyFrame>
+          <KeyFrame Cue="50%">
+            <Setter Property="Opacity" Value="0.5"/>
+            <Setter Property="RotateTransform.Angle" Value="180.0"/>
+          </KeyFrame>
+          <KeyFrame Cue="75%">
+            <Setter Property="Opacity" Value="0.75"/>
+            <Setter Property="RotateTransform.Angle" Value="270.0"/>
+          </KeyFrame>
+          <KeyFrame Cue="100%">
+            <Setter Property="Opacity" Value="1.0"/>
+            <Setter Property="RotateTransform.Angle" Value="360.0"/>
+          </KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+  </UserControl.Styles>
+
+  <Border BorderBrush="Black"
+       BorderThickness="2"
+       CornerRadius="3"
+       Padding="4">
+    <Rectangle Classes="red"/>
+  </Border>
+</UserControl>

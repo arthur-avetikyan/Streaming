@@ -1,0 +1,17 @@
+﻿@page "/users/{UserName}"
+@attribute [Authorize]
+
+<BackButton ReturnUrl="@_returnUrl"></BackButton>
+
+<MatTabGroup @bind-ActiveIndex="@_tabIndex">
+    <MatTab Label="Info">
+        <ChildContent>
+            <UserInfo UserName="@UserName" IsEditEnabled="@_isEditEnabled"></UserInfo>
+        </ChildContent>
+    </MatTab>
+    <MatTab Label="Settings">
+        <ChildContent>
+            <UserSettings UserName="@UserName" DeleteUserExpansionOpen="@_deleteUserExpansionOpen"></UserSettings>
+        </ChildContent>
+    </MatTab>
+</MatTabGroup>

@@ -1,0 +1,39 @@
+﻿@using KioskStream.Web.Common.DataTransferObjects.Account;
+
+<AuthorizeView Context="AuthorizeContext">
+    <Authorized>
+        @{
+            if (IsAuthorized(AuthorizeContext))
+            {
+                @ChildContent
+            }
+        }
+    </Authorized>
+</AuthorizeView>
+
+@code{
+    [CascadingParameter]
+    public UserInfo UserInfo { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public int? HeadId { get; set; }
+
+    private bool IsAuthorized(AuthenticationState AuthorizeContext)
+    {
+        string role = AuthorizeContext.User.FindFirst(System.Security.Claims.ClaimTypes.Role).Value;
+        if (!string.IsNullOrWhiteSpace(role) && role == EAuthorizationRoles.Administrator.GetAuthorizationRolesName())
+        {
+            return true;
+        }
+
+        if (AuthorizeContext.User.Identity.Name == UserInfo.UserName)
+        {
+            return UserInfo.EmployeeId == HeadId;
+        }
+
+        return false;
+    }
+}

@@ -1,0 +1,77 @@
+﻿@page "/plugins"
+@using KioskStream.Web.Common.DataTransferObjects.RequestResponse
+@using Microsoft.AspNetCore.Components.Forms
+
+@attribute [Authorize]
+
+<MatH4>Kiosks</MatH4>
+
+@if (_plugins == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading...</label>
+    </LoadingBackground>
+}
+else
+{
+    <MatTable Class="mat-elevation-z5" Items="@_plugins" Striped="true" DebounceMilliseconds="150" ShowPaging="true"
+              UseSortHeaderRow="true" FilterByColumnName="FullName" SearchTermFieldLabel="Filter by Name" SearchTermFieldPlaceHolder="Kiosks" PageSize="@PageSize"
+              AllowSelection="false">
+        <MatTableHeader>
+            <MatSortHeaderRow>
+                <MatSortHeader>
+                    <MatTooltip Tooltip="Add New Plugin" Wrap="true">
+                        <MatButton Type="button" Icon="@MatIconNames.Add" Label="New"
+                                   OnClick="@(() => {_isUploadDialogOpen = true; })"></MatButton>
+                    </MatTooltip>
+                </MatSortHeader>
+                <MatSortHeader>Name</MatSortHeader>
+                <MatSortHeader>CreatedDate</MatSortHeader>
+            </MatSortHeaderRow>
+        </MatTableHeader>
+        <MatTableRow Context="PluginRow">
+            <td>
+                <div style="width: auto">
+                    @*<MatTooltip Tooltip="Edit Kiosk" Wrap="true">
+                            <MatIconButton Icon="@MatIconNames.Edit" OnClick="@(() => { OpenModal(PluginRow.Id);})">
+                            </MatIconButton>
+                        </MatTooltip>*@
+                    @*<AuthorizedAsAdmin>
+                        <MatTooltip Tooltip="Delete Employee" Wrap="true">
+                            <MatIconButton Icon="@MatIconNames.Delete" OnClick="@"></MatIconButton>
+                        </MatTooltip>
+                    </AuthorizedAsAdmin>*@
+                </div>
+            </td>
+            <td>@PluginRow.Name</td>
+            <td>@PluginRow.CreateDateTimeUtc.ToString("MMMM dd, yyyy")</td>
+
+        </MatTableRow>
+    </MatTable>
+}
+
+<MatDialog @bind-IsOpen="@_isUploadDialogOpen">
+    <MatDialogTitle>Upload Plugin</MatDialogTitle>
+    <EditForm Model="@PluginRequest" OnValidSubmit="@Upload">
+        <MatDialogContent>
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <fieldset>
+                <div class="form-group">
+                    <MatTextField Label="Name" PlaceHolder="Name" Required="true" @bind-Value="PluginRequest.Name"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatFileUpload OnChange="@FilesReadyMat" AllowMultiple="false" Label="Drop a single file here or Browse"></MatFileUpload>
+                    @if (_matFileUpload != null)
+                    {
+                        <MatBody1>@_matFileUpload.Name</MatBody1>
+                    }
+                </div>
+            </fieldset>
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton Type="reset" OnClick="@(e => { _isUploadDialogOpen = false; })">Cancel</MatButton>
+            <MatButton Type="submit">Save</MatButton>
+        </MatDialogActions>
+    </EditForm>
+</MatDialog>

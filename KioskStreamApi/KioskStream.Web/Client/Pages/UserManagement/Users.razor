@@ -1,0 +1,153 @@
+﻿@page "/users"
+
+@attribute [Authorize]
+
+<MatH4><MatIcon>people_outline</MatIcon> Users</MatH4>
+
+@if (_users == null)
+{
+    <LoadingBackground ShowLogoBox="true">
+        <label>Loading...</label>
+    </LoadingBackground>
+}
+else
+{
+    if (_currentSelectedUser != null)
+    {
+
+    }
+    <MatTable Class="mat-elevation-z5" Items="@_users" LoadInitialData="true" FilterByColumnName="FirstName" SearchTermFieldLabel="Filter by First Name" SearchTermFieldPlaceHolder="User" Striped="true" RequestApiOnlyOnce="true" ApiUrl="api/users"
+              DebounceMilliseconds="150" PageSize="@PageSize" AllowSelection="true" SelectionChanged="SelectionChangedEvent">
+        <MatTableHeader>
+            <th><MatButton Icon="add" Label="New" OnClick="@(e => { _createUserDialogOpen = true; })"></MatButton></th>
+            <th>User Name</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>                Roles </th>
+        </MatTableHeader>
+        <MatTableRow Context="userRow">
+            <td>
+                <div style="width:155px;">
+                    @*<AuthorizeView Policy="@Dashboard.User.Update" Context="AuthorizeContext">
+                        <Authorized>*@
+                    <MatTooltip Tooltip="Edit" Wrap="true">
+                        <MatIconButton Icon="edit" OnClick="@(() => OpenEditDialog(userRow.UserName))"></MatIconButton>
+                    </MatTooltip>
+                    @*</Authorized>
+                            <NotAuthorized>
+                                <MatIconButton Icon="edit" Disabled="true"></MatIconButton>
+                            </NotAuthorized>
+                        </AuthorizeView>*@
+                    <MatTooltip Tooltip="Reset" Wrap="true">
+                        <MatIconButton Icon="rotate_right" OnClick="@(() => OpenChangePasswordDialog(userRow.UserName, userRow.Id))"></MatIconButton>
+                    </MatTooltip>
+                    @*Disabled="@(UserRow.UserId != userProfile.UserId)"*@
+                    @*<AuthorizeView Policy="@Dashboard.User.Delete" Context="AuthorizeContext">
+                        <Authorized>*@
+                    <MatTooltip Tooltip="Delete" Wrap="true">
+                        <MatIconButton Icon="delete" OnClick="@(() => OpenDeleteDialog(userRow.UserName))"></MatIconButton>
+                    </MatTooltip>
+                    @*</Authorized>
+                            <NotAuthorized>
+                                <MatIconButton Icon="delete" Disabled="true"></MatIconButton>
+                            </NotAuthorized>
+                        </AuthorizeView>*@
+                </div>
+            </td>
+
+            <td>
+                <div style="width: 130px;">
+                    <a href="/users/@userRow.UserName?returnUrl=@NavigationManager.ToBaseRelativePath(@NavigationManager.Uri)">@userRow.UserName</a>
+                </div>
+            </td>
+            <td><div style="width:130px;">@userRow.FirstName</div></td>
+            <td><div style="width:130px;">@userRow.LastName</div></td>
+            <td><div style="width:180px;">@userRow.Email</div></td>
+            <td>
+                <MatChipSet>
+                    @{
+                            int currentCount = 0;
+                            foreach (var item in userRow.Roles)
+                            {
+                                if (!userRow.DisplayMore)
+                                {
+                                    if (currentCount <= 1)
+                                    {
+                                    <MatChip Label="@item"></MatChip>
+                                    }
+                                }
+                                else
+                                {
+                                <MatChip Label="@item"></MatChip>
+                                }
+                                currentCount++;
+                            }
+                            if (userRow.Roles.Count > 2)
+                            {
+                            <MatChip LeadingIcon="@(userRow.DisplayMore ? MatIconNames.Visibility : MatIconNames.Visibility_off)" @onclick="@(()=>ShowMore(userRow.Id))"></MatChip>
+                            }
+                    }
+                </MatChipSet>
+            </td>
+        </MatTableRow>
+    </MatTable>
+}
+
+<MatDialog @bind-IsOpen="@_createUserDialogOpen">
+    <MatDialogTitle>Create User</MatDialogTitle>
+    <MatDialogContent>
+        <EditForm Model="@RegisterParameters" OnValidSubmit="@CreateUserAsync">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <fieldset>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@RegisterParameters.UserName" Label="User Name" Icon="person" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@RegisterParameters.FirstName" Label="First Name" Icon="person_pin" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@RegisterParameters.LastName" Label="Last Name" Icon="person_pin" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@RegisterParameters.Email" Label="Email" Icon="mail_outline" IconTrailing="true" FullWidth="true" Required="true"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@RegisterParameters.Password" Label="Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@RegisterParameters.PasswordConfirm" Label="Password Confirmation" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                </div>
+            </fieldset>
+        </EditForm>
+    </MatDialogContent>
+    <MatDialogActions>
+        <MatButton OnClick="@(e => { _createUserDialogOpen = false; })">Cancel</MatButton>
+        <MatButton OnClick="@CreateUserAsync">Save</MatButton>
+    </MatDialogActions>
+</MatDialog>    
+
+
+<MatDialog @bind-IsOpen="@_changePasswordDialogOpen">
+    <MatDialogTitle>Change password for @ChangePasswordParameters.UserName</MatDialogTitle>
+    <MatDialogContent>
+        <EditForm Model="@ChangePasswordParameters" OnValidSubmit="@ChangeUserPasswordAsync">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <fieldset>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@ChangePasswordParameters.OldPassword" Label="Old Password" Icon="lock" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@ChangePasswordParameters.NewPassword" Label="New Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                </div>
+                <div class="form-group">
+                    <MatTextField @bind-Value="@ChangePasswordParameters.PasswordConfirm" Label="New Password Confirmation" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                </div>
+            </fieldset>
+            <MatButton OnClick="@(e => { _changePasswordDialogOpen = false; })">Cancel</MatButton>
+            <MatButton Type="submit">Save</MatButton>
+        </EditForm>
+    </MatDialogContent>
+</MatDialog>

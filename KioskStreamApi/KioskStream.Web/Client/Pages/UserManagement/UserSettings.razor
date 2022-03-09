@@ -1,0 +1,57 @@
+﻿@using KioskStream.Web.Common.DataTransferObjects.UserManagement
+
+<MatAccordion>
+    <MatExpansionPanel @bind-Expanded="@_changePasswordExpansionOpen">
+        @{
+            if (!_changePasswordExpansionOpen)
+            {
+                ChangePasswordParameters = new ChangePasswordParameters();
+            }
+            else
+            {
+                ChangePasswordParameters.UserName = UserName;
+            }
+        }
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>
+                Change password
+            </MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+            <EditForm Model="@ChangePasswordParameters" OnValidSubmit="@ChangeUserPasswordAsync">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <fieldset>
+                    <div class="form-group">
+                        <MatTextField @bind-Value="@ChangePasswordParameters.OldPassword" Label="Old Password" Icon="lock" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                    </div>
+                    <div class="form-group">
+                        <MatTextField @bind-Value="@ChangePasswordParameters.NewPassword" Label="New Password" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                    </div>
+                    <div class="form-group">
+                        <MatTextField @bind-Value="@ChangePasswordParameters.PasswordConfirm" Label="New Password Confirmation" Icon="lock_outline" IconTrailing="true" FullWidth="true" Required="true" Type="password"></MatTextField>
+                    </div>
+                </fieldset>
+                <MatButton OnClick="@(e => { _changePasswordExpansionOpen = false; })">Cancel</MatButton>
+                <MatButton Raised="true" Type="submit">Save</MatButton>
+            </EditForm>
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+
+    <MatExpansionPanel @bind-Expanded="@DeleteUserExpansionOpen">
+        <MatExpansionPanelSummary>
+            <MatExpansionPanelHeader>
+                Delete account
+            </MatExpansionPanelHeader>
+        </MatExpansionPanelSummary>
+        <MatExpansionPanelDetails>
+            <p>
+                Are you sure you want to delete user "@UserName"?
+            </p>
+            <MatButton OnClick="@(e => { DeleteUserExpansionOpen = false; })">Cancel</MatButton>
+            <MatThemeProvider Theme="@_redTheme">
+                <MatButton Unelevated="true" OnClick="@DeleteUserAsync">Delete</MatButton>
+            </MatThemeProvider>
+        </MatExpansionPanelDetails>
+    </MatExpansionPanel>
+</MatAccordion>

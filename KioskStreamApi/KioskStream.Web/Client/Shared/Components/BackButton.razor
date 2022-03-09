@@ -1,0 +1,19 @@
+﻿@if (!string.IsNullOrWhiteSpace(ReturnUrl))
+{
+    <MatButton Icon="@MatIconNames.Arrow_back_ios" Label="Back" OnClick="@GoBack"></MatButton>
+    <br />
+}
+
+@code{
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
+    [Parameter] public string ReturnUrl { get; set; }
+
+    private void GoBack()
+    {
+        if (!string.IsNullOrEmpty(ReturnUrl))
+        {
+            NavigationManager.NavigateTo($"/{ReturnUrl}");
+        }
+    }
+}

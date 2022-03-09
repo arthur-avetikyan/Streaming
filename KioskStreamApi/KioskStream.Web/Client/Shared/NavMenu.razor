@@ -1,0 +1,57 @@
+﻿@using KioskStream.Web.Client.Pages.KioskManagement
+@using Microsoft.AspNetCore.Components;
+@using KioskStream.Web.Client.Pages.UserManagement
+
+@inject NavigationManager navigationManager
+
+@attribute [Authorize]
+
+<MatNavMenu Multi="true" Class="app-sidebar">
+    <MatNavItem Href="@navigationManager.ToAbsoluteUri(" ").AbsoluteUri" NavLinkMatch="NavLinkMatch.All">
+        <MatIcon>home</MatIcon> <span class="miniHover">Home page</span>
+    </MatNavItem>
+
+    <AuthorizeView Context="AuthorizeContext">
+        <Authorized>
+            <MatNavSubMenu>
+                <MatNavSubMenuHeader>
+                    <MatNavItem AllowSelection="false">
+                        <MatIcon Icon="@MatIconNames.Desktop_mac"></MatIcon> <span class="miniHover">Kiosk</span>
+                    </MatNavItem>
+                </MatNavSubMenuHeader>
+                <MatNavSubMenuList>
+                    <MatNavItem Href="@nameof(Kiosks)">
+                        <MatIcon Icon="@MatIconNames.Desktop_mac"></MatIcon> <span class="miniHover">Registered Kiosk</span>
+                    </MatNavItem>
+                    <MatNavItem Href="@nameof(Plugins)">
+                        <MatIcon Icon="@MatIconNames.Desktop_windows"></MatIcon> <span class="miniHover">Plugins</span>
+                    </MatNavItem>
+                </MatNavSubMenuList>
+            </MatNavSubMenu>
+        </Authorized>
+    </AuthorizeView>
+</MatNavMenu>
+
+@code {
+    public bool IsLoggedIn = false;
+
+    [CascadingParameter]
+    Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        IsLoggedIn = false;
+        var user = (await authenticationStateTask).User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            IsLoggedIn = true;
+        }
+
+        //if (user.IsInRole("Administrator"))
+        //{
+        //    //Perform some action only available to users in the 'admin' role
+        //    Console.WriteLine("Administrator");
+        //}
+    }
+}

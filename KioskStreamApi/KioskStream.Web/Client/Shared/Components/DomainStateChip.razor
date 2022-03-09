@@ -1,0 +1,8 @@
+﻿@using KioskStream.Core.Extensions
+
+<MatChip IsCheckable="false" Style="@($"background-color:{StateId.GenerateDomainStateColor()}")"
+         LeadingIcon="@StateId.GenerateDomainStateIconName()" Label="@StateId.GetDomainStateName()"></MatChip>
+
+@code{
+    [Parameter] public int StateId { get; set; }
+}
